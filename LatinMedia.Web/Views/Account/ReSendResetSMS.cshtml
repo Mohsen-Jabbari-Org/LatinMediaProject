@@ -1,0 +1,64 @@
+﻿@model LatinMedia.DataLayer.Entities.User.User
+
+@{
+    ViewData["Title"] = "ReSendResetSMS";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<script src="~/js/sweetalert.min.js"></script>
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2>بازیابی کلمه عبور</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">بازیابی کلمه عبور</span></p>
+    </div>
+</div>
+
+<br />
+
+<div class="alert alert-success text-center" style="direction:rtl">
+
+    @if (ViewBag.IsSuccess != null)
+    {
+        <script>
+            swal("موفق", "کد بازیابی کلمه عبور ارسال شد", "success");
+        </script>
+
+    }
+
+    <form method="post" action="/Account">
+
+        <p>
+            @(Model.FirstName + " " + Model.LastName) عزیز !
+            <br />
+            جهت بازیابی کلمه عبور یک کد 4 رقمی برای شماره موبایل
+            <span>
+                "@Model.Mobile"
+            </span>
+            ارسال شد .
+            <br />
+            لطفا جهت ادامه عملیات کد را در کادر زیر وارد نموده و روی دکمه اتمام ثبت نام کلیک نمایید .
+
+            <input name="ActiveCode" type="text" placeholder="کد 4 رقمی را وارد نمایید" onkeypress="return onlyNumberKey(event)" maxlength="4">
+            <br />
+
+            <input type="submit" class="button mid btn-success" value="بازیابی کلمه عبور" formaction="Account/ResetPassword" />
+            <br />
+        </p>
+
+    </form>
+</div>
+@section Scripts
+{
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}
+

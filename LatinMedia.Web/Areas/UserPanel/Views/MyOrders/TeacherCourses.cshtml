@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LatinMedia.DataLayer.Entities.Course.Course>
+@{
+    ViewData["Title"] = "TeacherCourses";
+}
+
+<div class="content">
+    <div class="container-fluid">
+   
+
+            <div class="row">
+
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">لیست کلاس های شما</h4>
+                            <p class="card-category"></p>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row ">
+
+                                <table class="table table-bordered table-hover table-striped col-md-11  ">
+                                    <tr class="table-info">
+                                        <th>ردیف</th>
+                                        <th>عنوان کلاس</th>
+
+                                        <th>ورود به کلاس</th>
+                                      
+                                    </tr>
+                                    @{
+                                        int RowCount = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@RowCount</td>
+                                            <td>@(item.CourseFaTitle)</td>
+
+                                            <td>
+                                                <a href="@(item.Language)">پیوستن به کلاس </a>
+                                            </td>
+                                           
+                                        </tr>
+                                        RowCount++;
+                                    }
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+       
+    </div>
+</div>
+
+

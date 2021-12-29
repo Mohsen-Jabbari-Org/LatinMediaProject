@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "فعال سازی حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <script src="/js/sweetalert.min.js"></script>
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2> فعال سازی حساب کاربری</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">فعال سازی حساب کاربری</span></p>
+    </div>
+</div>
+
+<br />
+
+@if (ViewBag.IsActive)
+{
+    <script>
+        swal("موفق", "حساب کاربری شما با موفقیت فعال گردید. در حال هدایت به صفحه ورود", "success");
+
+        // Your delay in milliseconds
+        var delay = 3000;
+        //setTimeout(function () { window.location = "https://localhost:44341/Login"; }, delay);
+        setTimeout(function () { window.location = "https://lms.btnrahgosha.ir/Login"; }, delay);
+    </script>
+}
+else
+{
+    <script>
+        swal("خطا", "حساب کاربری یافت نشد", "success");
+
+        // Your delay in milliseconds
+        var delay = 3000;
+        //setTimeout(function () { window.location = "https://localhost:44341/Login"; }, delay);
+        setTimeout(function () { window.location = "https://lms.btnrahgosha.ir/Login"; }, delay);
+    </script>
+}
+

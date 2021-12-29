@@ -1,0 +1,111 @@
+﻿@model IEnumerable<LatinMedia.DataLayer.Entities.Course.Course>
+@using LatinMedia.Core.Security
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "TeacherCourses";
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">لیست کلاس های شما</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row ">
+
+                            <table class="table table-bordered table-hover col-md-11  ">
+                                <tr class="table-info">
+                                    <th>ردیف</th>
+                                    <th>عنوان کلاس</th>
+                                    <th>آموزشگاه</th>
+                                    <th>ورود به کلاس</th>
+
+                                </tr>
+                                @{
+                                    int RowCount = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>@RowCount</td>
+                                <td>@(item.CourseFaTitle)</td>
+
+                                @if (DateTime.Compare(DateTime.Now, item.CreateDate) < 0)
+                                {
+                                    <td>
+                                        @CourseService.GetAcademyById(item.CompanyId)
+                                    </td>
+                                    <td>
+                                        <span>زمان شروع کلاس @item.CreateDate.ToShamsi()</span>
+                                    </td>
+                                }
+
+
+                                else if (DateTime.Compare(DateTime.Now, item.CreateDate) >= 0 &&
+                                    DateTime.Compare(DateTime.Now, item.EndDate) <= 0)
+                                {
+                                    <td>
+                                        @CourseService.GetAcademyById(item.CompanyId)
+                                    </td>
+                                    <td>
+                                        <a href="@(item.Language)" class="btn btn-success btn-xs">پیوستن به کلاس </a>
+                                    </td>
+                                }
+
+                                @*else if (DateTime.Compare(DateTime.Now, item.Course.CreateDate) >= 0 &&
+                                        DateTime.Compare(DateTime.Now, item.Course.EndDate) <= 0)
+                                    {
+                                        if (DateTime.Now.Hour < item.Course.CreateDate.Hour || DateTime.Now.Hour > item.Course.CreateDate.Hour + 2.5)
+                                        {
+                                            <td>
+                                                <span>زمان شروع کلاس @item.Course.CreateDate.AddDays(1).ToShamsi()</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a href="@(item.Course.CourseLatinTitle)" class="btn btn-success btn-xs">پیوستن به کلاس </a>
+                                            </td>
+                                        }
+
+                                    }*@
+
+
+                                @*else if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
+                                {
+                                    <td>
+                                        @CourseService.GetAcademyById(item.CompanyId)
+                                    </td>
+                                    <td>
+                                        <span>کلاس خاتمه یافته است</span>
+                                    </td>
+                                }*@
+
+                            </tr>
+                                    RowCount++;
+                                }
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+

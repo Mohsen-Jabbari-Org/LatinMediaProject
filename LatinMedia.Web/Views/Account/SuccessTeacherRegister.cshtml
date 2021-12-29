@@ -1,0 +1,48 @@
+﻿@model LatinMedia.DataLayer.Entities.Teacher.NewTeacher
+@{
+    ViewData["Title"] = "تکمیل ثبت نام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2> تکمیل ثبت نام</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">تکمیل ثبت نام</span></p>
+    </div>
+</div>
+
+<br />
+
+<div class="alert alert-success text-center" style="direction:rtl">
+    <form method="post" action="/Account">
+
+        <p>
+            @(Model.FirstName + " " + Model.LastName) عزیز !
+            <br />
+            ثبت نام شما با موفقیت انجام شد ، برای فعالسازی حساب کاربری پس از کلیک بر روی دکمه "اتمام ثبت نام" با  "مدیریت فناوری اطلاعات موسسه راهگشا" تماس بگیرید
+
+            <br />
+
+            <br />
+
+
+            <input type="submit" class="button mid btn-success" value="اتمام ثبت نام" formaction="ActivateTeacherAccount" />
+            <br />
+        </p>
+
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}

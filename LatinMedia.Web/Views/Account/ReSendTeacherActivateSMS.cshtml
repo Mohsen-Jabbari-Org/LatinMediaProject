@@ -1,0 +1,52 @@
+﻿@model LatinMedia.DataLayer.Entities.Teacher.NewTeacher
+@{
+    ViewData["Title"] = "تکمیل ثبت نام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2> تکمیل ثبت نام</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">تکمیل ثبت نام</span></p>
+    </div>
+</div>
+
+<br />
+
+<div class="alert alert-success text-center" style="direction:rtl">
+    <form method="post" action="/Account">
+
+        <p>
+            @(Model.FirstName + " " + Model.LastName) عزیز !
+            <br />
+            ثبت نام شما با موفقیت انجام شد ، یک کد 4 رقمی برای شماره موبایل
+            <span>
+                "@Model.Mobile"
+            </span>
+            ارسال شد .
+            <br />
+            لطفا جهت ادامه ثبت نام کد را در کادر زیر وارد نموده و روی دکمه اتمام ثبت نام کلیک نمایید .
+
+            <input name="ActiveCode" type="text" placeholder="کد 4 رقمی را وارد نمایید" onkeypress="return onlyNumberKey(event)" maxlength="4">
+            <br />
+
+            @*<button type="submit" class="button mid btn-success" formaction="">اتمام ثبت نام</button>*@
+            <input type="submit" class="button mid btn-success" value="اتمام ثبت نام" formaction="ActivateTeacherAccount" />
+        </p>
+
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}

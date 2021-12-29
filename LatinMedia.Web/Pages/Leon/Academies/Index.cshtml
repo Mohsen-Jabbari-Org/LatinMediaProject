@@ -1,0 +1,209 @@
+﻿@page
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@model LatinMedia.Web.Pages.Leon.Academies.IndexModel
+@inject IUserService UserService
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LeonLayout.cshtml";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست آموزشگاهها
+
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.AcademiesForAdminViewModel.Academies.Count == 0)
+                {
+                    <div class="alert alert-danger ">
+                        رکوردی یافت نشد
+                    </div>
+                }
+
+                <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <form>
+                            <div class="col-sm-5">
+                                <div class="dataTables_length" id="datatable-checkbox_length">
+                                    <label>
+                                        نمایش
+                                        <select name="take" aria-controls="datatable-checkbox" class="form-control input-sm">
+                                            <option value="">پیش فرض</option>
+                                        </select> آموزشگاه
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="filterByName" class="form-control" value="@ViewData["FilterName"]" placeholder="جستجو براساس نام آموزشگاه" />
+
+                                <input type="text" id="txtCity" name="filterByCityName" class="form-control" value="@ViewData["FilterCityName"]" placeholder="جستجو بر اساس شهر" />
+                                <br />
+                                <input type="hidden" id="hfCityId" name="filterByCity" value="@ViewData["FilterCity"]" />
+                                <label id="CId"></label>
+
+                                <input type="submit" value="فیلتر کن" class="btn btn-success btn-round" />
+                                <a href="/Leon/Academies/" class="btn btn-default btn-round">حذف فیلتر</a>
+                            </div>
+
+                        </form>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="/Leon/Academies/CreateAcademy/" class="btn btn-success">افزودن آموزشگاه جدید</a>
+                            @{
+                                int rowCount = 1;
+                            }
+                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th style="width: 60px;" class="hidden-xs">ردیف</th>
+                                        <th style="width: 138px;">نام آموزشگاه</th>
+                                        <th style="width: 138px;">نام و نام خانوادگی مدیر</th>
+                                        <th style="width: 150px;" class="hidden-xs">گروه فعالیت</th>
+                                        <th style="width: 150px;">ساعت های مجاز</th>
+                                        <th style="width: 138px;">عملیات</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item in Model.AcademiesForAdminViewModel.Academies)
+                                    {
+
+                                        <tr role="row" class="odd">
+                                            <td class="hidden-xs">@rowCount</td>
+                                            <td>@item.AcademyFullName</td>
+                                            <td>@item.ManagerName</td>
+                                            <td class="hidden-xs">
+                                                @{
+                                                    List<string> types = UserService.GetAcademyTypes(item.AcademyId);
+                                                }
+                                                @foreach (var type in types)
+                                                {
+                                                    @(type + " - ")
+                                                }
+                                            </td>
+                                            <td>
+                                                @{
+                                                    List<string> validTimes = UserService.GetAcademyValidTimes(item.AcademyId);
+                                                }
+                                                @foreach (var validTime in validTimes)
+                                                {
+                                                    @(validTime + " - ")
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="/Leon/Academies/AddTeachers/@item.AcademyId" class="btn btn-info btn-xs"> <i class="fa fa-user"></i>افزودن مدرس</a>
+                                                <a href="/Leon/Academies/DelTeachers/@item.AcademyId" class="btn btn-danger btn-xs"> <i class="fa fa-trash-o"></i>حذف مدرس</a>
+                                                <a href="/Leon/Academies/EditAcademy/@item.AcademyId" class="btn btn-warning btn-xs">ویرایش</a>
+                                                <a href="/Leon/Academies/DeleteAcademy/@item.AcademyId" class="btn btn-danger btn-xs">حذف</a>
+                                            </td>
+                                        </tr>
+                                        rowCount++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">نمایش @ViewData["PageID"] تا @ViewData["Take"] از @Model.AcademiesForAdminViewModel.AcademyCounts رکورد</div>
+                        </div>
+                        <div class="col-sm-7">
+
+                            <div class="btn-group">
+                                @if (Model.AcademiesForAdminViewModel.CurrentPage > 1)
+                                {
+                                    <a class="btn btn-default" href="/Leon/Academies?pageId=@(Model.AcademiesForAdminViewModel.CurrentPage-1)&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]">قبلی</a>
+                                    <a class="btn btn-default" href="/Leon/Academies?pageId=1&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]">اولین صفحه</a>
+
+                                }
+
+                                @if (Model.AcademiesForAdminViewModel.CurrentPage + 4 <= Model.AcademiesForAdminViewModel.PageCount)
+                                {
+                                    @for (int i = Model.AcademiesForAdminViewModel.CurrentPage; i <= Model.AcademiesForAdminViewModel.CurrentPage + 4; i++)
+                                    {
+
+                                        <a href="/Leon/Academies?pageId=@i&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]" class="btn btn-default @((i==Model.AcademiesForAdminViewModel.CurrentPage)? "btn btn-info" : "")">@i</a>
+
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = Model.AcademiesForAdminViewModel.CurrentPage; i <= Model.AcademiesForAdminViewModel.PageCount; i++)
+                                    {
+                                        <a href="/Leon/Academies?pageId=@i&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]" class="btn btn-default @((i==Model.AcademiesForAdminViewModel.CurrentPage)? "btn btn-info" : "")">@i</a>
+                                    }
+                                }
+
+
+                                @if (Model.AcademiesForAdminViewModel.CurrentPage < Model.AcademiesForAdminViewModel.PageCount)
+                                {
+
+                                    <a class="btn btn-default" href="/Leon/Academies?pageId=@(Model.AcademiesForAdminViewModel.CurrentPage + 1)&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]">بعدی</a>
+                                    <a class="btn btn-default" href="/Leon/Academies?pageId=@(Model.AcademiesForAdminViewModel.PageCount)&fn=@ViewData["FilterName"]&fc=@ViewData["FilterCity"]&fcn=@ViewData["FilterCityName"]">اخرین صفحه</a>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#txtCity").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Account/CityAutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfCityId").val(i.item.val);
+                },
+                minLength: 2,
+                appendTo: '#CId',
+                position: { my: "left top", at: "left bottom" }
+            });
+        });
+    </script>
+}

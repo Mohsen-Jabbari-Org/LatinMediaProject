@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LatinMedia.DataLayer.Entities.Course.Course>
+@using LatinMedia.Core.Security
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "محتوای آموزشی";
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">لیست کلاس های شما</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row ">
+
+                            <table class="table table-bordered table-hover col-md-11  ">
+                                <tr class="table-info">
+                                    <th>ردیف</th>
+                                    <th>عنوان محتوا</th>
+                                    <th>دانلود</th>
+
+                                </tr>
+                                @{
+                                    int RowCount = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>@RowCount</td>
+                                <td>@(item.CourseFaTitle)</td>
+                                <td>
+                                    <a href="@(item.CourseLatinTitle)">دریافت فایل </a>
+                                </td>
+                            </tr>
+                                    RowCount++;
+                                }
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+

@@ -1,0 +1,279 @@
+﻿@page "{id}"
+@using LatinMedia.Core.Convertors
+@model LatinMedia.Web.Pages.Academy.RhgAcClass.EditClassModel
+@{
+    ViewData["Title"] = "ویرایش دوره";
+    Layout = "_AcademyLayout";
+}
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Course.CourseFileName" />
+        <input type="hidden" asp-for="Course.CourseImageName" />
+        <input type="hidden" asp-for="Course.CourseId" />
+        <input type="hidden" asp-for="Course.CreateDate" />
+        <input type="hidden" asp-for="Course.EndDate" />
+        <input type="hidden" asp-for="Course.CourseFileName" value="DefaultFile" />
+        <input type="hidden" asp-for="Course.CourseLatinTitle" />
+        <input type="hidden" asp-for="Course.Language" />
+        <input type="hidden" asp-for="Course.DemoFileName" />
+        <input type="hidden" asp-for="Course.MaxUsers" />
+        <input type="hidden" asp-for="Course.CourseTime" />
+        <input type="hidden" asp-for="Course.ServerId" />
+
+        <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        ویرایش کلاس
+
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label asp-for="Course.CourseFaTitle" class="control-label col-md-7 ">
+                            </label>
+                            <div class="col-md-12">
+                                <input asp-for="Course.CourseFaTitle" disabled="disabled" class="form-control  " placeholder="عنوان آموزش را وارد نمایید" type="text">
+                                <span asp-validation-for="Course.CourseFaTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label asp-for="Course.CourseDescription" class="control-label col-md-7  ">
+                            </label>
+                            <div class="col-md-12">
+                                <textarea asp-for="Course.CourseDescription" disabled="disabled"></textarea>
+                                <span asp-validation-for="Course.CourseDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                مدرس
+                            </label>
+                            <div class="col-md-7">
+                                <select asp-for="Course.TeacherId" asp-items="@(ViewData["CourseTeacher"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.Teacher" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                آموزشگاه
+                            </label>
+                            <div class="col-md-7">
+                                <select disabled name="AcademyId" id="AcademyId" asp-for="Academy.AcademyId" asp-items="@( ViewData["Academies"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Academy.AcademyId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تاریخ شروع
+                            </label>
+                            <div class="col-md-7">
+                                <input value="@((Model.Course.CreateDate !=null)? Model.Course.CreateDate.ToShamsiForEdit() : "")" type="text" name="stDate" id="stDate" class="form-control" placeholder="تاریخ شروع"
+                                       data-ha-dp-disabletime="true" data-ha-datetimepicker="#stDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تاریخ پایان
+                            </label>
+                            <div class="col-md-7">
+                                <input value="@((Model.Course.CreateDate !=null)? Model.Course.EndDate.ToShamsiForEdit() : "")" type="text" name="fhDate" id="fhDate" class="form-control" placeholder="تاریخ پایان"
+                                       data-ha-dp-disabletime="true" data-ha-datetimepicker="#fhDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                ساعت برگزاری کلاس
+                            </label>
+                            <div class="col-md-7">
+                                <select asp-for="Course.VTA_Id" asp-items="@(ViewData["ValidTimes"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.VTA_Id" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <hr class="col-md-12" />
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+
+                                <input type="submit" class="btn btn-success" value="ثبت" />
+                                <a asp-page="Index" class="btn btn-warning">انصراف</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2></h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7 ">
+                                انتخاب تصویر اموزش
+                            </label>
+                            <img id="imgCourse" src="~/course/images/online.jpg" class="img-thumbnail" />
+                            <input name="imgCourseUp" id="img_CourseUp" type="file" />
+                            <hr />
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                انتخاب گروه اصلی
+                            </label>
+                            <div class="col-md-12">
+                                <select asp-for="Course.GroupId" asp-items="@(ViewData["Groups"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.GroupId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        @*<div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                انتخاب زیر گروه اول
+                            </label>
+                            <div class="col-md-12">
+                                <select asp-for="Course.SubGroupId" asp-items="@(ViewData["SubGroups"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.SubGroupId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                انتخاب زیر گروه دوم
+                            </label>
+                            <div class="col-md-12">
+                                <select asp-for="Course.SecondSubGroupId" asp-items="@( ViewData["SecondSubGroups"] as SelectList)" class="form-control"></select>
+                                <hr />
+                                <span asp-validation-for="Course.SecondSubGroupId" class="text-danger"></span>
+                            </div>
+                        </div>*@
+                        <div class="item  form-group">
+                            <label class="control-label col-md-7 ">
+                                وضعیت انتشار کلاس
+                                @*برای پابلیش کردن کلاس*@
+                            </label>
+                            <div class="col-md-7  ">
+                                <input asp-for="Course.IsSubTitle" type="checkbox" class="js-switch" data-switchery="true" style="display: none;">
+                                &nbsp;
+                                <label>منتشر شده / منتشر نشده</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+@section Scripts
+    {
+    <script src="//cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Course.CourseDescription', {
+            customConfig: '/js/Config.js'
+        });
+    </script>
+
+    <script>
+        $("#Course_GroupId").change(function () {
+            $("#Course_SubGroupId").empty();
+            $.getJSON("/home/GetSubGroups/" + $("#Course_GroupId :selected").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#Course_SubGroupId")
+                                .append('<option value=' + this.value + '>' + this.text + '</option>');
+                        });
+                });
+        });
+
+
+        $("#Course_SubGroupId").change(function () {
+            $("#Course_SecondSubGroupId").empty();
+            $.getJSON("/home/GetSecondSubGroups/" + $("#Course_SubGroupId :selected").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#Course_SecondSubGroupId")
+                                .append('<option value=' + this.value + '>' + this.text + '</option>');
+                        });
+                });
+        });
+    </script>
+
+    <script>
+        $("#State_StateId").change(function () {
+            $("#City_CityId").empty();
+            $("#AcademyId").empty();
+            $.getJSON("/home/GetCity/" + $("#State_StateId :selected").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#City_CityId")
+                                .append('<option value=' + this.value + '>' + this.text + '</option>');
+                        });
+                });
+        });
+
+
+        $("#City_CityId").change(function () {
+            $("#AcademyId").empty();
+            $.getJSON("/home/GetAcademies/" + $("#City_CityId :selected").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#AcademyId")
+                                .append('<option value=' + this.value + '>' + this.text + '</option>');
+                        });
+                });
+        });
+
+    </script>
+
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#img_CourseUp").change(function () {
+            readURL(this);
+        });
+    </script>
+}
+
+
+
+

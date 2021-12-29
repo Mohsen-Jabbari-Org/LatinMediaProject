@@ -1,0 +1,161 @@
+﻿@page "{id}"
+@using LatinMedia.Core.Convertors
+@using LatinMedia.DataLayer.Entities.Course
+@model LatinMedia.Web.Pages.Academy.RhgAcClass.AddUsersModel
+@{
+    ViewData["Title"] = "افزودن هنرجو";
+    Layout = "_AcademyLayout";
+    List<UserCourse> userCourses = ViewData["UserIn"] as List<UserCourse>;
+}
+    <form method="post">
+        <input type="hidden" id="hfCourseId" name="CourseId" asp-for="Course.CourseId" />
+        <input type="hidden" id="hfAcademyId" name="AcademyId" asp-for="Course.CompanyId" />
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        افزودن کاربر جدید
+
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label asp-for="Course.CourseFaTitle" class="control-label col-md-7 ">
+                            </label>
+                            <div class="col-md-12">
+                                <input asp-for="Course.CourseFaTitle" class="form-control  " readonly="readonly" type="text">
+                                @*<span asp-validation-for="Course.CourseFaTitle" class="text-danger"></span>*@
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                مدرس
+                            </label>
+                            <div class="col-md-7">
+                                <select disabled asp-for="Course.TeacherId" asp-items="@(ViewData["CourseTeacher"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.TeacherId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                آموزشگاه
+                            </label>
+                            <div class="col-md-7">
+                                <select disabled asp-for="Course.CompanyId" asp-items="@(ViewData["Companies"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.CompanyId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تاریخ شروع
+                            </label>
+                            <div class="col-md-7">
+                                <input disabled="disabled" asp-for="Course.CreateDate" type="text" name="stDate" id="stDate" class="form-control" placeholder="تاریخ شروع"
+                                       value="@((Model.Course.CreateDate !=null)? Model.Course.CreateDate.ToShamsiForEdit() : "")" data-ha-dp-disabletime="false" data-ha-datetimepicker="#stDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                            </div>
+                        </div>
+
+                        <hr class="col-md-12" />
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+                                <a asp-page="Index" class="btn btn-warning">بازگشت</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2></h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-12 col-lg-12">
+                                کاربر :
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" id="txtUsers" class="form-control" placeholder="نام خانوادگی هنرجو را وارد کنید">
+                                <span class="fa fa-bookmark form-control-feedback left" aria-hidden="true"></span>
+                                <input type="hidden" id="hfUsers" name="Users" value="0" />
+                                <label id="AId"></label>
+                                <span asp-validation-for="Course.CourseFaTitle" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-1">
+                                <input type="submit" class="btn btn-success" value="ثبت" />
+                            </div>
+                        </div>
+
+                        <div class=" item form-group">
+                            <label class="control-label col-md-12 col-lg-12">
+                                کاربران :
+                            </label>
+                            <div class="col-md-9 col-lg-9">
+                                <select id="DUser" asp-for="Users.UserId" class="form-control" multiple="">
+                                    @foreach (var item in userCourses)
+                                    {
+                                        <option value="@item.UC_Id"> @item.User.FirstName @item.User.LastName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $("#txtUsers").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Account/UsersAutoComplete/',
+                        data: { "prefix": request.term, "AcademyId": $("#hfAcademyId").val() , "CourseId": $("#hfCourseId").val() },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfUsers").val(i.item.val);
+                },
+                minLength: 4,
+                appendTo: '#AId',
+                position: { my: "left top", at: "left bottom" }
+            });
+        });
+    </script>
+}

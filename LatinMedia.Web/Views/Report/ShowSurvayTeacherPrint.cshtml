@@ -1,0 +1,18 @@
+﻿@using Stimulsoft.Report.Mvc
+@{
+    ViewData["Title"] = "گزارش";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.StiNetCoreViewer((new StiNetCoreViewerOptions()
+{
+    Actions =
+    {
+        GetReport="SurvayTeacherPrint",
+        ViewerEvent="ViewEvent"
+    }
+}))
+
+
+

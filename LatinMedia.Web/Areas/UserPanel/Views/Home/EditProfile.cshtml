@@ -1,0 +1,93 @@
+﻿@model LatinMedia.Core.ViewModels.EditProfileViewModel
+@{
+    ViewData["Title"] = "ویرایش اطلاعات کاربری";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+    <div class="content">
+        <div class="container-fluid">
+            <form asp-action="EditProfile" enctype="multipart/form-data">
+                @*برای ارسال اطلاعات چند فیلد جهت ویرایش*@
+                <input type="hidden" asp-for="AvatarName" />
+                <input type="hidden" asp-for="AcademyId" />
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">ویرایش اطلاعات کاربری</h4>
+                                <p class="card-category"></p>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    @*<div class="col-md-3">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">نام</label>
+                                    <select asp-for="GenderId" asp-items="@(new SelectList(@ViewBag.GenderList,"GenderId","GenderName"))" class="form-control"></select>
+                                </div>
+                                <span asp-validation-for="GenderId" class="text-danger"></span>
+                            </div>*@
+
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating">جنسیت</label>
+                                            <select asp-for="GenderId" asp-items="@(new SelectList(@ViewBag.GenderList,"GenderId","GenderName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">نام</label>
+                                            <input asp-for="FirstName" type="text" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">نام خانوادگی</label>
+                                            <input asp-for="LastName" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating">آموزشگاه</label>
+                                            <select disabled asp-for="AcademyId" asp-items="@(new SelectList(@ViewBag.AcademyList,"AcademyId","AcademyName"))" class="form-control accordion"></select>
+                                        </div>
+                                        <span asp-validation-for="AcademyId" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+
+
+                                <button type="submit" class="btn btn-success btn-round  pull-right">ذخیره اطلاعات</button>
+                                <div class="clearfix"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="">
+                                    <img class="img" src="/UserAvatar/@Model.AvatarName">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                @*<input asp-for="UserAvatar" />
+                                <p class="help text-danger">انتخاب عکس جهت پروفایل کاربری</p>*@
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>

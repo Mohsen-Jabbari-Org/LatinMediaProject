@@ -1,0 +1,95 @@
+﻿@page
+@model LatinMedia.Web.Pages.Leon.Servers.IndexModel
+@{
+    ViewData["Title"] = "مدیریت سرورها";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست سرور ها
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.ServerViewModels.Count == 0)
+                {
+                    <div class="alert alert-danger ">
+                        رکوردی یافت نشد
+                    </div>
+                }
+
+                <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="/Leon/Servers/CreateServer/" class="btn btn-success">افزودن سرور جدید</a>
+                            @{
+                                int rowCount = 1;
+                            }
+                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="hidden-xs">ردیف</th>
+                                        <th>نام سرور</th>
+                                        <th class="hidden-xs">آدرس سرور</th>
+                                        <th class="hidden-xs">توکن سرور</th>
+                                        <th>وضعیت</th>
+                                        <th>کلاس های فعال</th>
+                                        <th>کلاس های غیر فعال</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var server in Model.ServerViewModels)
+                                    {
+
+                                    <tr role="row" class="odd">
+                                        <td class="hidden-xs">@rowCount</td>
+                                        <td>@server.ServerName</td>
+                                        <td class="hidden-xs">@server.ServerUrl</td>
+                                        <td class="hidden-xs">@server.ServerSharesSecret</td>
+                                        <td>
+                                            @if (server.IsActive)
+                                            {
+                                                <span class="alert-success">فعال</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="alert-danger">غیر فعال</span>
+                                            }
+                                        </td>
+                                        <td>@server.ServerInUseMeetings</td>
+                                        <td>@server.ServerNullMeetings</td>
+                                        <td>
+                                            <a href="/Leon/Servers/EditServer/@server.Id" class="btn btn-warning btn-xs">ویرایش</a>
+                                        </td>
+                                    </tr>
+                                        rowCount++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

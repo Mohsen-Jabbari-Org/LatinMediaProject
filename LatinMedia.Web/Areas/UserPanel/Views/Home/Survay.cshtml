@@ -1,0 +1,348 @@
+﻿@model LatinMedia.Core.ViewModels.SurveyViewModel
+@using LatinMedia.Core.Services.Interfaces
+@using LatinMedia.Core.ViewModels
+@inject IUserService UserService
+@{
+    ViewData["Title"] = "نظرسنجی";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <form asp-action="Survay">
+            @*برای ارسال اطلاعات چند فیلد جهت ویرایش*@
+            <input type="hidden" asp-for="FirstName" />
+            <input type="hidden" asp-for="LastName" />
+            <input type="hidden" asp-for="GenderId" />
+            <input type="hidden" asp-for="Mobile" />
+            <input type="hidden" asp-for="UserId" />
+            @if (!Model.IsPolled)
+            {
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">بخش اول) اطلاعات تکمیل کننده فرم ارزیابی</h4>
+                                <p class="card-category"></p>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">جنسیت</label>
+                                            <select asp-for="GenderId" asp-items="@(new SelectList(@ViewBag.GenderList, "GenderId", "GenderName"))" class="form-control" disabled="disabled"></select>
+                                        </div>
+                                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating" style="color:black">نام</label>
+                                            <input asp-for="FirstName" type="text" class="form-control" disabled="disabled">
+                                        </div>
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating" style="color:black">نام خانوادگی</label>
+                                            <input asp-for="LastName" class="form-control" disabled="disabled">
+                                        </div>
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">شغل</label>
+                                            <select asp-for="Employment" asp-items="@(new SelectList(@ViewBag.EmpList, "EmpId", "EmpName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Employment" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">تحصیلات</label>
+                                            <select asp-for="Education" asp-items="@(new SelectList(@ViewBag.EduList, "EduId", "EduName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Education" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating" style="color:black">سن</label>
+                                            <input asp-for="Age" class="form-control" onkeypress="return onlyNumberKey(event)" maxlength="2">
+                                        </div>
+                                        <span asp-validation-for="Age" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating" style="color:black">شماره تماس</label>
+                                            <input asp-for="Mobile" class="form-control" disabled="disabled">
+                                        </div>
+                                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">بخش دوم) ارزیابی عملکرد سامانه</h4>
+                                <p class="card-category"></p>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از نحوه اتصال به سامانه و شرکت در کلاس</label>
+                                            <select asp-for="Poll1" asp-items="@(new SelectList(@ViewBag.TowList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll1" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از برگزاری کلاس آنلاین</label>
+                                            <select asp-for="Poll2" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll2" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از نحوه آشنایی و استفاده از سامانه</label>
+                                            <select asp-for="Poll3" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll3" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از پشتیبانی و هماهنگی اولیه</label>
+                                            <select asp-for="Poll4" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll4" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان محیط سامانه و ابزارها و امکانات در دسترس</label>
+                                            <select asp-for="Poll5" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll5" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">پیشنهادات، انتقادات و شکایات در بخش فوق</label>
+                                            <input asp-for="Comment1" type="text" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="Comment1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">بخش سوم) ارزیابی عملکرد مدرس آئین نامه</h4>
+                                @{
+                                    List<TeachersForSurvay> types = ViewBag.TeacherList;
+                                    Model.teachersForSurvays = types;
+                                    ViewData["ListOfTeacher"] = types;
+                                }
+                                @foreach (var type in types)
+                                {
+                                    @if (type.TeacherType == 1)
+                                    {
+                                        @(type.TeacherFullName + " - ")
+                                    }
+
+                                }
+
+                                <p class="card-category"></p>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از نحوه تدریس و تسلط مدرس</label>
+                                            <select asp-for="Poll6" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll6" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از محتوای مطالب ارائه شده</label>
+                                            <select asp-for="Poll7" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll7" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از نحوه حضور و رعایت زمان بندی کلاس توسط مدرس</label>
+                                            <select asp-for="Poll8" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll8" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از رعایت اخلاق و ادب توسط مدرس</label>
+                                            <select asp-for="Poll9" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll9" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از نحوه کلاس داری مدرس</label>
+                                            <select asp-for="Poll10" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll10" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از استفاده مدرس از سامانه و امکانات آن</label>
+                                            <select asp-for="Poll11" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll11" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">پیشنهادات، انتقادات و شکایات در بخش فوق</label>
+                                            <input asp-for="Comment2" type="text" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="Comment2" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">بخش چهارم) ارزیابی عملکرد مدرس فنی</h4>
+
+                                @foreach (var type in types)
+                                {
+                                    @if (type.TeacherType == 2)
+                                    {
+                                        @(type.TeacherFullName + " - ")
+                                    }
+
+                                }
+                                <p class="card-category"></p>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از نحوه تدریس و تسلط مدرس</label>
+                                            <select asp-for="Poll12" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll12" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از محتوای مطالب ارائه شده</label>
+                                            <select asp-for="Poll13" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll13" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از نحوه حضور و رعایت زمان بندی کلاس توسط مدرس</label>
+                                            <select asp-for="Poll14" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll14" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجو از رعایت اخلاق و ادب توسط مدرس</label>
+                                            <select asp-for="Poll15" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll15" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از نحوه کلاس داری مدرس</label>
+                                            <select asp-for="Poll16" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll16" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">ارزیابی هنرجویان از استفاده مدرس از سامانه و امکانات آن</label>
+                                            <select asp-for="Poll17" asp-items="@(new SelectList(@ViewBag.FourList, "ItemId", "ItemName"))" class="form-control"></select>
+                                        </div>
+                                        <span asp-validation-for="Poll17" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            <label class="bmd-label-floating" style="color:black">پیشنهادات، انتقادات و شکایات در بخش فوق</label>
+                                            <input asp-for="Comment3" type="text" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="Comment3" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success btn-round  pull-right">ثبت نظرسنجی</button>
+                                <div class="clearfix"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="x_content">
+                    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger text-center">
+                        شما قبلاً در نظرسنجی شرکت کرده اید
+                    </div>
+                </div>
+            }
+
+        </form>
+    </div>
+</div>
+
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>

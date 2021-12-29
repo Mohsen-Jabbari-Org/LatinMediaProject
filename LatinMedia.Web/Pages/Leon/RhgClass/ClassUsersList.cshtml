@@ -1,0 +1,90 @@
+﻿@page "{id}"
+@using LatinMedia.Core.Convertors
+@using LatinMedia.DataLayer.Entities.Course
+@using LatinMedia.Core.Services.Interfaces
+@using LatinMedia.Core.Security
+@model LatinMedia.Web.Pages.Leon.RhgClass.ClassUsersListModel
+@inject ICourseService CourseService
+@{
+    List<UserCourse> userCourses = ViewData["UserIn"] as List<UserCourse>;
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست هنرجویان کلاس @Model.Course.CourseFaTitle
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.showUsersInClassViewModels.Count == 0)
+                {
+                    <div class="alert alert-danger ">
+                        رکوردی یافت نشد
+                    </div>
+                }
+
+                <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            @{
+                                int rowCount = 1;
+                            }
+                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="hidden-xs">ردیف</th>
+                                        <th class="hidden-xs">تصویر کاربر</th>
+                                        <th>نام و نام خانوادگی</th>
+                                        <th>شماره موبایل</th>
+                                        <th>تاریخ ثبت نام</th>
+                                        <th>وقایع هترجو</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var item in Model.showUsersInClassViewModels)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td class="hidden-xs">@rowCount</td>
+                                            <td class="hidden-xs"><img src="/UserAvatar/@item.UserAvatar" class="img-circle" height="50" /></td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Mobile</td>
+                                            <td>@item.CreateDate</td>
+                                            <td><a href="/Leon/RhgClass/UserEvents/@item.Mobile@ViewData["CourseId"]" class="btn btn-warning btn-xs"> <i class="fa fa-info"></i>وقایع هنرجو</a></td>
+                                        </tr>
+                                        rowCount++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                <hr class="col-md-12" />
+                <div class="item form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+                        <a asp-page="ArchivedClass" class="btn btn-warning">بازگشت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

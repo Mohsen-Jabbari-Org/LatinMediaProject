@@ -1,0 +1,129 @@
+﻿@page "{AcademyId}"
+@using LatinMedia.Core.Convertors
+@using LatinMedia.DataLayer.Entities.Course
+@using LatinMedia.DataLayer.Entities.User
+@using LatinMedia.DataLayer.Entities.Teacher
+@model LatinMedia.Web.Pages.Support.Academies.DelTeachersModel
+@{
+    ViewData["Title"] = "حذف مدرس";
+    Layout = "_SupportLayout";
+    List<TeacherAcademy> teacherAcademy = ViewData["TeacherIn"] as List<TeacherAcademy>;
+}
+
+<form method="post">
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    افزودن کاربر جدید
+
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            نام آموزشگاه :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="Academy.AcademyName" disabled="disabled" class="form-control  " placeholder="لطفا نام آموزشگاه را وارد کنید" type="text">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            شهر :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="Academy.AcademyFullName" disabled="disabled" type="text" id="txtCity" class="form-control" placeholder="سه حرف اول نام شهر را ورد نمایید">
+                            <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            نام و نام خانوادگی موسس :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="Academy.OwnerName" disabled="disabled" class="form-control  " placeholder="لطفا نام خانوادگی موسس را وارد کنید" type="text">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            نام مدیر :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="Academy.ManagerName" disabled="disabled" class="form-control  " placeholder="لطفا نام خانوادگی مدیر را وارد کنید" type="text">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                    </div>
+
+                    <hr class="col-md-12" />
+                    <div class="item form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+                            <a asp-page="Index" class="btn btn-warning">بازگشت</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2></h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="row">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            کاربر :
+                        </label>
+                        <div class="col-md-9">
+                            <select id="Teachers" name="Teachers" class="form-control">
+                                @foreach (var item in teacherAcademy)
+                                {
+                                    <option value="@item.TA_Id">@item.NewTeacher.FirstName @item.NewTeacher.LastName</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Academy.AcademyName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="submit" class="btn btn-danger" value="حذف" />
+                        </div>
+                    </div>
+
+                    <div class=" item form-group">
+                        <label class="control-label col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            کاربران :
+                        </label>
+                        <div class="col-md-9">
+                            <select id="TeacherList" asp-items="@(ViewData["TeacherAcademy"] as SelectList)" class="form-control" multiple=""></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+

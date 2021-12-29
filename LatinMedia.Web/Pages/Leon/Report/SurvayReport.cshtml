@@ -1,0 +1,237 @@
+﻿@page
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@model LatinMedia.Web.Pages.Leon.SurvayReport.SurvayReportModel
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "گزارشات";
+}
+
+
+<form method="post">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    گزارشات
+
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="item form-group col-md-4">
+                        <label class="control-label">
+                            انتخاب استان
+                        </label>
+                        <div>
+                            <select asp-for="ReportForSurvayViewModel.StateId" asp-items="@(ViewData["States"] as SelectList)" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group col-md-4">
+                        <label class="control-label   ">
+                            تاریخ شروع
+                        </label>
+                        <div>
+                            <input type="text" name="stDate" id="stDate" class="form-control" placeholder="تاریخ شروع" value="@ViewData["start"]"
+                                   data-ha-dp-disabletime="true" data-ha-datetimepicker="#stDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group col-md-4">
+                        <label class="control-label  ">
+                            تاریخ پایان
+                        </label>
+                        <div>
+                            <input type="text" name="fhDate" id="fhDate" class="form-control" placeholder="تاریخ پایان" value="@ViewData["end"]"
+                                   data-ha-dp-disabletime="true" data-ha-datetimepicker="#fhDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group col-md-4">
+                        <label class="control-label">
+                            جنسیت
+                        </label>
+                        <div>
+                            <select asp-for="ReportForSurvayViewModel.GenderId" asp-items="@(ViewData["Gender"] as SelectList)" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group col-md-4">
+                        <label class="control-label">
+                            تحصیلات
+                        </label>
+                        <div>
+                            <select asp-for="ReportForSurvayViewModel.EduId" asp-items="@(ViewData["Education"] as SelectList)" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group col-md-4">
+                        <label class="control-label">
+                            شغل
+                        </label>
+                        <div>
+                            <select asp-for="ReportForSurvayViewModel.EmpId" asp-items="@(ViewData["Employment"] as SelectList)" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+
+                        <input type="submit" value="فیلتر کن" class="btn btn-success btn-round" />
+                        <a href="/Leon/Report/SurvayReport" class="btn btn-default btn-round">حذف فیلتر</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        @{
+                            int rowCount = 1;
+                        }
+                        <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                            <thead>
+                                <tr role="row">
+                                    <th style="width: 60px; text-align:center; font-size:smaller" class="hidden-xs">ردیف</th>
+                                    <th style="width: 190px; text-align:center; font-size:smaller">نام و نام خانوادگی مدرس</th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 1 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 2 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 3 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 4 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 5 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 150px; text-align:center; font-size:smaller" colspan="4">
+                                        گزینه 6 (درصد)
+                                        <br />
+                                        عالی&nbsp;&nbsp;&nbsp;خوب&nbsp;&nbsp;&nbsp;متوسط&nbsp;&nbsp;&nbsp;ضعیف
+                                    </th>
+                                    <th style="width: 37.5px; text-align:center; font-size:smaller">تعداد هنرجویان</th>
+                                    <th style="width: 138px; text-align:center; font-size:smaller">عملیات</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach (var item in Model.ReportForSurvayDetailViewModels)
+                                {
+                                <tr role="row" class="odd">
+                                    <td class="hidden-xs" style="text-align:center">@rowCount</td>
+                                    <td style="width: 190px; text-align:center">@item.TeacherFullName</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll1_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll1_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll1_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll1_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll2_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll2_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll2_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll2_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll3_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll3_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll3_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll3_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll4_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll4_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll4_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll4_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll5_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll5_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll5_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll5_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll6_1</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll6_2</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll6_3</td>
+                                    <td style="width:37.5px; text-align:center">@item.Poll6_4</td>
+                                    <td style="width:37.5px; text-align:center">@item.UserCount</td>
+                                    <td style="text-align:center">
+                                        <a href="/Leon/Report/SurvayDetailReport?TI=@item.TeacherId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]" class="btn btn-warning btn-xs">جزئیات</a>
+                                        <a href="/Leon/Report/SurvayCommentReport?TI=@item.TeacherId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]" class="btn btn-info btn-xs">نظرات</a>
+                                    </td>
+                                </tr>
+                                    rowCount++;
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <a href="/Report/ShowSurvayPrint?&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["startPrint"]&SE=@ViewData["endPrint"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]" class="btn btn-success btn-round" target="_blank">چاپ اطلاعات</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">نمایش @ViewData["PageID"] تا @ViewData["Take"] از @Model.paging.UserCounts رکورد</div>
+                    </div>
+                    <div class="col-sm-7">
+
+                        <div class="btn-group">
+                            @if (Model.paging.CurrentPage > 1)
+                            {
+
+                                <a class="btn btn-default" href="/Leon/Report/SurvayReport?pageId=1&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]">اولین صفحه</a>
+                                <a class="btn btn-default" href="/Leon/Report/SurvayReport?pageId=@(Model.paging.CurrentPage-1)&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]">قبلی</a>
+                            }
+
+                            @if (Model.paging.CurrentPage + 4 <= Model.paging.PageCount)
+                            {
+                                @for (int i = Model.paging.CurrentPage; i <= Model.paging.CurrentPage + 4; i++)
+                                {
+
+                                    <a href="/Leon/Report/SurvayReport?pageId=@i&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]" class="btn btn-default @((i==Model.paging.CurrentPage)? "btn btn-info" : "")">@i</a>
+
+                                }
+                            }
+                            else
+                            {
+                                for (int i = Model.paging.CurrentPage; i <= Model.paging.PageCount; i++)
+                                {
+                                    <a href="/Leon/Report/SurvayReport?pageId=@i&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]" class="btn btn-default @((i==Model.paging.CurrentPage)? "btn btn-info" : "")">@i</a>
+                                }
+                            }
+
+                            @if (Model.paging.CurrentPage < Model.paging.PageCount)
+                            {
+
+                                <a class="btn btn-default" href="/Leon/Report/SurvayReport?pageId=@(Model.paging.CurrentPage + 1)&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]">بعدی</a>
+                                <a class="btn btn-default" href="/Leon/Report/SurvayReport?pageId=@(Model.paging.PageCount)&SI=@Model.ReportForSurvayViewModel.StateId&SD=@ViewData["start"]&SE=@ViewData["end"]&GI=@ViewData["GI"]&EDI=@ViewData["EDI"]&EMI=@ViewData["EMI"]">اخرین صفحه</a>
+
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+

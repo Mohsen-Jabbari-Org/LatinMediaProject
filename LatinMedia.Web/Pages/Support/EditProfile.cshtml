@@ -1,0 +1,112 @@
+﻿@page
+@model LatinMedia.Web.Pages.Support.EditProfileModel
+@using LatinMedia.DataLayer.Entities.User;
+@{
+    ViewData["Title"] = "ویرایش اطلاعات کاربری";
+    Layout = "_SupportLayout";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+              ویرایش اطلاعات کاربری
+             
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              
+             
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <form method="post" asp-page="EditProfile" class="form-horizontal form-label-left">
+                <input type="hidden" asp-for="EditSupportProfileViewModel.AvatarName" />
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">نام کاربری / شماره موبایل : </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input asp-for="EditSupportProfileViewModel.Mobile" type="text" class="form-control" disabled="disabled">
+                        <span class="fa fa-mobile form-control-feedback left" aria-hidden="true"></span>
+
+                    </div>
+                </div>
+
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        جنسیت :
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select asp-for="EditSupportProfileViewModel.GenderId" asp-items="@(new SelectList((IEnumerable<Gender>)ViewData["GenderList"],"GenderId","GenderName"))" class="form-control col-md-7 col-xs-12"></select>
+                        <span class="text-danger" asp-validation-for="EditSupportProfileViewModel.GenderId"></span>
+                    </div>
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        نام :
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="FirstName" asp-for="EditSupportProfileViewModel.FirstName" required="" class="form-control col-md-7 col-xs-12  " placeholder="لطفا نام را وارد کنید" type="text">
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    <span class="text-danger" asp-validation-for="EditSupportProfileViewModel.FirstName"></span>
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        نام خانوادگی :
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input asp-for="EditSupportProfileViewModel.LastName" required="" class="form-control col-md-7 col-xs-12" placeholder="لطفا نلم خانوادگی را وارد کنید" type="text">
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        <span class="text-danger"></span>
+
+                        <span class="text-danger" asp-validation-for="EditSupportProfileViewModel.LastName"></span>
+                    </div>
+
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        استان :
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" disabled asp-for="EditSupportProfileViewModel.Province" class="form-control col-md-7 col-xs-12" />
+                        <span class="text-danger" asp-validation-for="EditSupportProfileViewModel.Province"></span>
+                    </div>
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label>انتخاب تصویر کاربر : </label>
+                        <input type="file" asp-for="EditSupportProfileViewModel.UserAvatar" />
+                        <br />
+                        <img src="/UserAvatar/@Model.EditSupportProfileViewModel.AvatarName" class="img-circle" height="120" />
+
+
+                    </div>
+
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+
+                        <button type="submit" class="btn btn-success">ذخیره</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+       
+    </div>
+</div>
+

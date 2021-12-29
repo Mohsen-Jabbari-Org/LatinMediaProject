@@ -1,0 +1,128 @@
+﻿@model LatinMedia.Core.ViewModels.LoginTeacherViewModel
+@{
+    ViewData["Title"] = "ورود به سامانه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+<script src="/js/sweetalert.min.js"></script>
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2>ورود به سامانه (مدرس)</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">ورود به سامانه (مدرس)</span></p>
+    </div>
+</div>
+
+<div class="section-wrap">
+    <div class="section demo">
+
+        <div class="form-popup ">
+
+            <!-- FORM POPUP HEADLINE -->
+            <div class="form-popup-headline primary" style="background-color:darkcyan">
+                <h2>ورود به سامانه (مدرس)</h2>
+
+            </div>
+
+
+            @if (ViewBag.IsSuccess != null)
+            {
+                <script>
+                    swal("موفق", "ورود با موفقیت انجام شد", "success");
+
+                    // Your delay in milliseconds
+                    var delay = 3000;
+                    setTimeout(function () { window.location = "https://lms.btnrahgosha.ir/"; }, delay);
+                    //setTimeout(function () { window.location = "https://localhost:44341/"; }, delay);
+                </script>
+
+            }
+
+            @if (ViewBag.EditProfile == true)
+            {
+                <script>
+                    swal("اطلاعات کاربری یا موفقیت به روز رسانی شد", "جهت بارگذاری اطلاعات پروفایل دوباره لاگین کنید", "success");
+
+                </script>
+            }
+
+            @if (ViewBag.Permission == false)
+            {
+                <script>
+                    swal("خطا دسترسی !", "شما مجوز دسترسی به این قسمت  را ندارید", "error");
+
+                </script>
+            }
+
+
+            <div class="form-popup-content" style="background-color:gainsboro">
+                <form asp-action="LoginTeacher" method="post">
+
+                    <label>نام کاربری / شماره موبایل</label>
+                    <input type="text" asp-for="Mobile" placeholder="شماره موبایل به همراه صفر" onkeypress="return onlyNumberKey(event)" maxlength="11">
+                    <span asp-validation-for="Mobile"></span>
+
+                    <label>کلمه عبور</label>
+                    <input type="password" style="width:100%; height:40px; text-align:right; padding-right:10px; border:1px solid #ebebeb" asp-for="Password" placeholder="کلمه عبور خود را وارد کنید">
+                    <span asp-validation-for="Password"></span>
+
+                    <label></label>
+                    <input type="checkbox" asp-for="RememberMe" checked="" />
+                    <label for="RememberMe" class="label-check">
+                        <span class="checkbox primary primary"><span></span></span>
+                        مرا به خاطر بسپار
+                    </label>
+                    <p>رمزتان را گم کرده‌اید؟ <a href="/ForgotTeacherPassword" class="primary">اینجا کلیک کنید</a></p>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <img id="img-captcha" src="~/get-captcha-image" />
+                        </div>
+                        <input type="text" class="form-control" placeholder="کد امنیتی" asp-for="CaptchaCode" maxlength="4" />
+                        <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <input type="submit" class="button mid secondary-dark" value="ورود به سامانه" />
+
+
+                </form>
+            </div>
+            <!-- /FORM POPUP CONTENT -->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#img-captcha").click(function () {
+            resetCaptchaImage();
+        });
+
+        function resetCaptchaImage() {
+            d = new Date();
+            $("#img-captcha").attr("src", "/get-captcha-image?" + d.getTime());
+        }
+    </script>
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}
+
+
+
+
+
+

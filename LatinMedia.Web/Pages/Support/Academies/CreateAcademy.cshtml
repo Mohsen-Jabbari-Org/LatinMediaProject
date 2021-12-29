@@ -1,0 +1,243 @@
+﻿@page
+@using LatinMedia.DataLayer.Entities.User
+@model LatinMedia.Web.Pages.Support.Academies.CreateAcademyModel
+@{
+    ViewData["Title"] = "ایجاد آموزشگاه";
+    Layout = "_SupportLayout";
+    List<AcademyType> academyTypes = ViewData["Type"] as List<AcademyType>;
+    List<ValidTimesCourse> validTimesCourse = ViewData["Valid"] as List<ValidTimesCourse>;
+}
+
+    <form enctype="multipart/form-data" method="post">
+        <input type="hidden" id="hfStateId" name="StateId" value="@ViewData["StateId"]" />
+        <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        افزودن آموزشگاه جدید
+
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                نام آموزشگاه :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.AcademyName" required="" class="form-control  " placeholder="لطفا نام آموزشگاه را وارد کنید" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.AcademyName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                شهر :
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" id="txtCity" class="form-control" required="" placeholder="سه حرف اول نام شهر را ورد نمایید" />
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                <input type="hidden" id="hfCityId" asp-for="CreateAcademyViewModel.CityId" />
+                                <input type="hidden" id="hfAcademyFullName" asp-for="CreateAcademyViewModel.AcademyFullName" />
+                            </div>
+                        </div>
+                        <label id="CId">-</label>
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                نام و نام خانوادگی موسس :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.OwnerName" required="" class="form-control  " placeholder="لطفا نام خانوادگی موسس را وارد کنید" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.OwnerName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                کد ملی موسس :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.OwnerId" class="form-control" placeholder="لطفا کد ملی موسس را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تلفن موسس :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.OwnerTell" class="form-control  " placeholder="لطفا تلفن مدرس را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.OwnerTell" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                نام مدیر :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.ManagerName" required="" class="form-control  " placeholder="لطفا نام خانوادگی مدیر را وارد کنید" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.ManagerName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تلفن مدیر :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.ManagerTell" class="form-control  " placeholder="لطفا تلفن مدیر را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.ManagerTell" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                کد ملی مدیر :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.ManagerId" class="form-control  " placeholder="لطفا کد ملی مدیر را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.ManagerId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                کد پستی :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.PostalCode" class="form-control  " placeholder="لطفا کد پستی را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.PostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تلفن آموزشگاه :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.AcademyTell" class="form-control  " placeholder="لطفا تلفن آموزشگاه را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.AcademyTell" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                آدرس آموزشگاه :
+                            </label>
+                            <div class="col-md-8">
+                                <input asp-for="CreateAcademyViewModel.AcademyAddress" class="form-control  " placeholder="لطفا آدرس آموزشگاه را وارد کنید (اختیاری)" type="text">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="CreateAcademyViewModel.AcademyAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                سرور :
+                            </label>
+                            <div class="col-md-8">
+                                <select asp-for="CreateAcademyViewModel.BBBServerId" asp-items="@(new SelectList((IEnumerable<BBBServers>)ViewData["ServerList"],"Id","ServerName"))" class="form-control col-md-7 col-xs-12"></select>
+                                <span class="text-danger" asp-validation-for="CreateAcademyViewModel.BBBServerId"></span>
+                            </div>
+                        </div>
+
+                        <hr class="col-md-12" />
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+
+                                <input type="submit" class="btn btn-success" value="ثبت" />
+                                <a asp-page="Index" class="btn btn-warning">انصراف</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xs-12">
+            <div class=" item form-group">
+                <label class="control-label col-md-7  ">
+                    گروه آموزشگاه :
+                </label>
+                <div class="col-md-8 ">
+                    <select name="selectedTypes" class="select2_multiple form-control" multiple="multiple">
+                        @foreach (var item in academyTypes)
+                        {
+                            <option value="@item.AcademyTypeId">@item.AcademyTypeTitle</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+
+            <div class=" item form-group">
+                <label class="control-label col-md-7  ">
+                    ساعت های مجاز :
+                </label>
+                <div class="col-md-8 ">
+                    <select name="selectedTimes" class="select2_multiple form-control" multiple="multiple">
+                        @foreach (var item in validTimesCourse)
+                        {
+                            <option value="@item.ValidTimesCourseId">@item.ValidTimesCourseName</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#txtCity").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Account/SupportCityAutoComplete/',
+                        data: { "prefix": request.term , "StateId" : $("#hfStateId").val() },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfCityId").val(i.item.val);
+                    $("#hfAcademyFullName").val(i.item.label);
+                },
+                minLength: 2,
+                appendTo: '#CId',
+                position: { my: "left top", at: "left bottom" }
+            });
+        });
+    </script>
+}

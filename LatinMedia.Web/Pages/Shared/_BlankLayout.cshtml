@@ -1,0 +1,61 @@
+﻿@using LatinMedia.Core.Security
+@using LatinMedia.Core.Services.Interfaces
+@using LatinMedia.Core.ViewModels
+@*@inject IUserService UserService
+@{
+    SideBarAdminPanelViewModel user = UserService.GetSideBarAdminPanelData(User.Identity.GetMobile());
+}*@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="fontiran.com:license" content="Y68A9">
+    <meta name="description" content="اولین سامانه آموزش آنلاین رانندگی پلیس راهنمایی و رانندگی ایران ، توید شده توسط موسسه راهگشا وابسته به بنیاد تعاون ناجا">
+    <meta name="keywords" content="سامانه آموزش، سامانه آموزش آنلاین،آموزش آنلاین رانندگی، آموزش رانندگی، موسسه راهگشا، راهگشا،کلاس های آنلاین رانندگی، آموزش آنلاین موسسه راهگشا">
+
+    <link rel="icon" href="/LeonContent/images/favicon.ico" type="image/ico" />
+    <title> پنل مدیریت | @ViewData["Title"] </title>
+
+    <partial name="_Styles" />
+
+</head>
+<!-- /header content -->
+<body>
+    <div class="container body">
+        <div class="main_container">
+            <!-- top navigation -->
+            <!-- /top navigation -->
+            <!-- /header content -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+            <!-- /page content -->
+            <!-- footer content -->
+        </div>
+            <!-- /footer content -->
+    </div>
+    
+
+    <partial name="_Scripts" />
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>
+
+
+

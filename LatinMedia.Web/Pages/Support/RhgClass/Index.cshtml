@@ -1,0 +1,224 @@
+﻿@page
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@model LatinMedia.Web.Pages.Support.RhgClass.IndexModel
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "لیست کلاس ها";
+    Layout = "_SupportLayout";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست کلاس های استان " @ViewData["StateName"] "
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.CourseListForAdminViewModel.CourseCounts == 0)
+                {
+                    <div class="alert alert-danger ">
+                        رکوردی یافت نشد
+                    </div>
+                }
+                @if (TempData["UpdateCourse"] != null)
+                {
+
+                    <div class="alert alert-info alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        اطلاعات دوره با موفقیت به روز رسانی شد
+                    </div>
+
+                }
+                @if (TempData["InsertCourse"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        دوره با موفقیت ثبت گردید
+                    </div>
+
+                }
+
+                <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <form>
+                            <input type="hidden" id="hfStateId" name="StateId" value="@ViewData["StateId"]" />
+                            <div class="col-sm-5">
+                                <div class="dataTables_length" id="datatable-checkbox_length">
+                                    <label>
+                                        نمایش
+                                        <select name="take" aria-controls="datatable-checkbox" class="form-control input-sm">
+                                            <option value="">پیش فرض</option>
+                                        </select> کلاس
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="filterByName" class="form-control" value="@ViewData["FilterName"]" placeholder="جستجو براساس عنوان" />
+
+                                <input type="text" id="txtAcademy" name="filterByAcademyName" class="form-control" value="@ViewData["FilterAcademyName"]" placeholder="جستجو بر اساس آموزشگاه" />
+                                <input type="hidden" id="hfAcademyId" name="filterByAcademy" value="@ViewData["FilterAcademy"]" />
+                                <label id="AId"></label>
+
+                                <input type="submit" value="فیلتر کن" class="btn btn-success btn-round" />
+                                <a href="/Support/RhgClass/" class="btn btn-default btn-round">حذف فیلتر</a>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="/Support/RhgClass/CreateClass/" class="btn btn-success">افزودن کلاس جدید</a>
+
+
+
+                            @{
+                                int rowCount = 1;
+                            }
+                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="hidden-xs">ردیف</th>
+                                        @*<th class="hidden-xs">تصویر آموزش</th>*@
+                                        <th>عنوان کلاس</th>
+                                        <th>تاریخ شروع کلاس</th>
+                                        <th>تاریخ پایان کلاس</th>
+                                        <th class="hidden-xs">ساعت کلاس</th>
+                                        <th class="hidden-xs">نوع دوره</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var item in Model.CourseListForAdminViewModel.Courses)
+                                    {
+                                        if (DateTime.Compare(DateTime.Now, item.EndDate) < 0)
+                                        {
+                                            <tr role="row" class="odd">
+                                                <td class="hidden-xs">@rowCount</td>
+                                                @*<td class="hidden-xs"><img src="/course/thumbnail/@item.CourseImageName" /></td>*@
+                                                <td>@item.CourseFaTitle</td>
+                                                <td>@item.CreateDate.ToShamsi()</td>
+                                                <td>@item.EndDate.ToShamsi()</td>
+                                                <td class="hidden-xs">@CourseService.GetTimesForCourse(item.VTA_Id)</td>
+                                                <td class="hidden-xs">@CourseService.GetGroupNameForAdmin(item.GroupId)</td>
+                                                <td>
+                                                    @*<a href="/Leon/RhgClass/AddUsers/@item.CourseId" class="btn btn-info btn-xs"> <i class="fa fa-user"></i>افزودن کاربر</a>*@
+                                                    <a href="/Support/RhgClass/EditClass/@item.CourseId" class="btn btn-info btn-xs"> <i class="fa fa-pencil"></i>ویرایش</a>
+                                                    <a href="/Support/RhgClass/ActiveClassUsersList/@item.CourseId" class="btn btn-warning btn-xs"> <i class="fa fa-users"></i>لیست هنرجویان</a>
+                                                    <a href="/Support/RhgClass/ActiveClassEvents/@item.CourseId" class="btn btn-warning btn-xs"> <i class="fa fa-info"></i>وقایع کلاس</a>
+                                                    <a href="/Support/RhgClass/DeleteClass/@item.CourseId" class="btn btn-danger btn-xs disabled"s> <i class="fa fa-trash-o"></i>حذف</a>
+                                                </td>
+                                            </tr>
+                                            rowCount++;
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">نمایش @ViewData["PageID"] تا @ViewData["Take"] از @Model.CourseListForAdminViewModel.CourseCounts رکورد</div>
+                        </div>
+                        <div class="col-sm-7">
+
+                            <div class="btn-group">
+                                @if (Model.CourseListForAdminViewModel.CurrentPage > 1)
+                                {
+
+                                    <a class="btn btn-default" href="/Support/RhgClass?pageId=@(Model.CourseListForAdminViewModel.CurrentPage-1)">قبلی</a>
+
+                                    <a class="btn btn-default" href="/Support/RhgClass?pageId=1">اولین صفحه</a>
+
+
+                                }
+
+                                @for (int i = 1; i <= Model.CourseListForAdminViewModel.PageCount; i++)
+                                {
+
+                                    <a href="/Support/RhgClass?pageId=@i" class="btn btn-default @((i==Model.CourseListForAdminViewModel.CurrentPage)? "btn btn-info" : "")">@i</a>
+
+                                }
+
+
+                                @if (Model.CourseListForAdminViewModel.CurrentPage < Model.CourseListForAdminViewModel.PageCount)
+                                {
+
+                                    <a class="btn btn-default" href="/Support/RhgClass?pageId=@(Model.CourseListForAdminViewModel.CurrentPage + 1)">بعدی</a>
+                                    <a class="btn btn-default" href="/Support/RhgClass?pageId=@(Model.CourseListForAdminViewModel.PageCount)">اخرین صفحه</a>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#txtAcademy").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Account/SupportAutoComplete/',
+                        data: { "prefix": request.term , "StateId" : $("#hfStateId").val() },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfAcademyId").val(i.item.val);
+                },
+                minLength: 2,
+                appendTo: '#AId',
+                position: { my: "left top", at: "left bottom" }
+            });
+        });
+    </script>
+    <script>
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}

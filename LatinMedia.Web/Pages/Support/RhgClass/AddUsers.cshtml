@@ -1,0 +1,123 @@
+﻿@page "{id}"
+@using LatinMedia.DataLayer.Entities.Course
+@model LatinMedia.Web.Pages.Support.RhgClass.AddUsersModel
+@{
+    ViewData["Title"] = "افزودن کاربر";
+    List<UserCourse> userCourses = ViewData["UserIn"] as List<UserCourse>;
+    Layout = "_SupportLayout";
+}
+    <form method="post">
+
+        <div class="col-md-8 col-sm-8 col-xs-8">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        افزودن کاربر جدید
+
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label asp-for="Course.CourseFaTitle" class="control-label col-md-7 ">
+                            </label>
+                            <div class="col-md-12">
+                                <input asp-for="Course.CourseFaTitle" class="form-control  " readonly="readonly" type="text">
+                                <span asp-validation-for="Course.CourseFaTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                مدرس
+                            </label>
+                            <div class="col-md-7">
+                                <select disabled asp-for="Course.TeacherId" asp-items="@(ViewData["CourseTeacher"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.TeacherId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                شرکت تولید کننده
+                            </label>
+                            <div class="col-md-7">
+                                <select disabled asp-for="Course.CompanyId" asp-items="@(ViewData["Companies"] as SelectList)" class="form-control"></select>
+                                <span asp-validation-for="Course.CompanyId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                تاریخ شروع
+                            </label>
+                            <div class="col-md-7">
+                                <input disabled="disabled" asp-for="Course.CreateDate" type="text" name="stDate" id="stDate" class="form-control" placeholder="تاریخ شروع"
+                                       data-ha-dp-disabletime="false" data-ha-datetimepicker="#stDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                            </div>
+                        </div>
+
+                        <hr class="col-md-12" />
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+                                <a asp-page="Index" class="btn btn-warning">بازگشت</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2></h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="row">
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-7  ">
+                                کاربر : 
+                            </label>
+                            <div class="col-md-7">
+
+                                <select id="SUser" name="SUser" asp-items="@(ViewData["CourseUsers"] as SelectList)" class="form-control"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="submit" class="btn btn-success" value="ثبت" />
+                            </div>
+                        </div>
+
+                        <div class=" item form-group">
+                            <label class="control-label col-md-7  ">
+                                کاربران :
+                            </label>
+                            <div class="col-md-7">
+                                <select asp-for="Users.UserId" class="form-control">
+                                    @foreach (var item in userCourses)
+                                    {
+                                        <option value="@item.UC_Id"> @item.User.FirstName @item.User.LastName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="" class="btn btn-danger">حذف</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>

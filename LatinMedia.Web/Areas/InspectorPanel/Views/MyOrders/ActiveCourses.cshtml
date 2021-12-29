@@ -1,0 +1,84 @@
+﻿@model IEnumerable<LatinMedia.DataLayer.Entities.Course.Course>
+@using LatinMedia.Core.Security
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "کلاس های فعال";
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">لیست کلاس های فعال</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row ">
+
+                            <table class="table table-bordered table-hover table-striped col-md-11  ">
+                                <tr class="table-info">
+                                    <th>ردیف</th>
+                                    <th class="hidden-xs">عنوان کلاس</th>
+                                    <th>آموزشگاه</th>
+                                    <th>ورود</th>
+                                    @*<th>ورود (مدرس)</th>*@
+
+                                </tr>
+                                @{
+                                    int RowCount = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>@RowCount</td>
+                                <td class="hidden-xs">@(item.CourseFaTitle)</td>
+
+                                @if (DateTime.Compare(DateTime.Now, item.CreateDate) < 0)
+                                {
+                                    <td>
+                                        @CourseService.GetAcademyById(item.CompanyId)
+                                    </td>
+                                    <td>
+                                        <span>زمان شروع کلاس @item.CreateDate.ToShamsi()</span>
+                                    </td>
+                                }
+                                else if (DateTime.Compare(DateTime.Now, item.CreateDate) >= 0 &&
+                                    DateTime.Compare(DateTime.Now, item.EndDate) <= 0)
+                                {
+                                    <td>
+                                        @CourseService.GetAcademyById(item.CompanyId)
+                                    </td>
+                                    <td>
+                                        <a href="@(item.CourseLatinTitle)" class="btn btn-success btn-xs">ورود </a>
+                                    </td>
+                                    @*<td>
+                                        <a href="@(item.Language)" class="btn btn-success btn-xs">ورود </a>
+                                    </td>*@
+                                }
+
+                            </tr>
+                                    RowCount++;
+                                }
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+

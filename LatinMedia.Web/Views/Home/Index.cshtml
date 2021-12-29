@@ -1,0 +1,549 @@
+﻿@model IEnumerable<LatinMedia.Core.ViewModels.ShowCourseListItemViewModel>
+@{
+    ViewData["Title"] = "صفحه اصلی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <style>
+        #bottom {
+            width: 100%;
+            background-color: blue;
+        }
+
+        .inner {
+            width: 49%;
+            height: 49%;
+            float: left;
+        }
+    </style>
+}
+
+<div class="banner-wrap">
+    <section class="banner">
+        @*<h5>
+            موسسه راهگشا (وابسته به بنیاد تعاون ناجا )
+        </h5>*@
+
+
+        @*<img src="images/top_items.png" alt="banner-img">*@
+        <!-- SEARCH WIDGET -->
+        @*<div class="search-widget">
+                <form  action="Course" method="get"  class="search-widget-form">
+                    <input type="text" name="filter" placeholder="جستجوی کلاس ها">
+                    <label for="categories" class="select-block">
+                        <select name="" id="categories">
+                            <option value="0">1</option>
+                            <option value="1">2</option>
+                            <option value="2">3</option>
+                            <option value="3">4</option>
+                            <option value="4">5</option>
+                            <option value="5">6</option>
+                            <option value="6">7</option>
+                            <option value="7">8</option>
+                            <option value="8">9</option>
+                        </select>
+                        <!-- SVG ARROW -->
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                        <!-- /SVG ARROW -->
+                    </label>
+                    <button class="button medium dark">جستجو</button>
+                </form>
+            </div>*@
+        <!-- /SEARCH WIDGET -->
+    </section>
+</div>
+
+<div id="bottom" style="background-color:#21282a;">
+
+
+
+@*<div class="product-showcase">
+            <div class="headline primary">
+                <h4>جدیدترین کلاس ها</h4>
+                <div class="slide-control-wrap">
+                    <div class="slide-control left">
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                    </div>
+                    <div class="slide-control right">
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div id="pl-1" class="product-list grid column4-wrap owl-carousel">
+                @foreach (var item in Model)
+                {
+                    <partial name="_CourseBox" model="item" />
+                }
+            </div>
+</div>*@
+    <div class="product-showcase">
+        <div class="headline secondary">
+            <h4>فیلم های آموزشی</h4>
+            <div class="slide-control-wrap">
+                <div class="slide-control left">
+                    <svg class="svg-arrow">
+                        <use xlink:href="#svg-arrow"></use>
+                    </svg>
+                </div>
+                <div class="slide-control right">
+                    <svg class="svg-arrow">
+                        <use xlink:href="#svg-arrow"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="pl-1" class="product-list grid column4-wrap owl-carousel">
+            <div class="product-item column ">
+                <!-- PRODUCT PREVIEW ACTIONS -->
+                <div class="product-preview-actions">
+                    <!-- PRODUCT PREVIEW IMAGE -->
+                    <figure class="product-preview-image">
+                        <img src="/course/thumbnail/courseDefaultImg.png" alt="product-image">
+                    </figure>
+                    <!-- /PRODUCT PREVIEW IMAGE -->
+                    <!-- PREVIEW ACTIONS -->
+                    <div class="preview-actions">
+                        <!-- PREVIEW ACTION -->
+                        <div class="preview-action">
+                            <a href="/LearningContent/Intro">
+                                <div class="circle tiny primary">
+                                    <span class="icon-tag"></span>
+                                </div>
+                            </a>
+                            <a href="/LearningContent/Intro">
+                                <p>نمایش</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <a href="/LearningContent/Intro">
+                        <p class="text-header">راهنمای نحوه ثبت نام</p>
+                    </a>
+                    <p class="product-description">آموزش ثبت نام توسط هنرجو از طریق گزینه عضویت </p>
+                    <a href="/LearningContent/Intro">
+                        <p class="category secondary">فیلم آموزش ثبت نام</p>
+                    </a>
+                </div>
+                <hr class="line-separator">
+                <div class="user-rating">
+                        <figure class="user-avatar small">
+                            <img src="/images/logo.png" alt="user-avatar">
+                        </figure>
+                        <p class="text-header tiny">موسسه راهگشا</p>
+                    @*<ul class="rating tooltip" title="Author's Reputation">
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item empty">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+            </ul>*@
+                </div>
+            </div>
+
+            <div class="product-item column">
+                <!-- PRODUCT PREVIEW ACTIONS -->
+                <div class="product-preview-actions">
+                    <!-- PRODUCT PREVIEW IMAGE -->
+                    <figure class="product-preview-image">
+                        <img src="/course/thumbnail/courseDefaultImg.png" alt="product-image">
+                    </figure>
+                    <!-- /PRODUCT PREVIEW IMAGE -->
+                    <!-- PREVIEW ACTIONS -->
+                    <div class="preview-actions">
+                        <!-- PREVIEW ACTION -->
+                        <div class="preview-action">
+                            <a href="/LearningContent/EnterClass">
+                                <div class="circle tiny primary">
+                                    <span class="icon-tag"></span>
+                                </div>
+                            </a>
+                            <a href="/LearningContent/EnterClass">
+                                <p>نمایش</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <a href="/LearningContent/EnterClass">
+                        <p class="text-header">راهنمای ورود به کلاس</p>
+                    </a>
+                    <p class="product-description">آموزش نحوه ورود به پروفایل هنرجویان و پیوستن به کلاس آنلاین </p>
+                    <a href="/LearningContent/EnterClass">
+                        <p class="category secondary">فیلم آموزش ورود به کلاس</p>
+                    </a>
+                </div>
+                <hr class="line-separator">
+                <div class="user-rating">
+                        <figure class="user-avatar small">
+                            <img src="/images/logo.png" alt="user-avatar">
+                        </figure>
+                        <p class="text-header tiny">موسسه راهگشا</p>
+                    @*<ul class="rating tooltip" title="Author's Reputation">
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item empty">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+            </ul>*@
+                </div>
+            </div>
+
+            <div class="product-item column">
+                <!-- PRODUCT PREVIEW ACTIONS -->
+                <div class="product-preview-actions">
+                    <!-- PRODUCT PREVIEW IMAGE -->
+                    <figure class="product-preview-image">
+                        <img src="/course/thumbnail/courseDefaultImg.png" alt="product-image">
+                    </figure>
+                    <!-- /PRODUCT PREVIEW IMAGE -->
+                    <!-- PREVIEW ACTIONS -->
+                    <div class="preview-actions">
+                        <!-- PREVIEW ACTION -->
+                        <div class="preview-action">
+                            <a href="/LearningContent/EnterTeacherClass">
+                                <div class="circle tiny primary">
+                                    <span class="icon-tag"></span>
+                                </div>
+                            </a>
+                            <a href="/LearningContent/EnterTeacherClass">
+                                <p>نمایش</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <a href="/LearningContent/EnterTeacherClass">
+                        <p class="text-header">راهنمای تشکیل کلاس توسط مدرس</p>
+                    </a>
+                    <p class="product-description">آموزش نحوه ورود به پروفایل مدرسان و تشکیل کلاس آنلاین </p>
+                    <a href="/LearningContent/EnterTeacherClass">
+                        <p class="category secondary">فیلم آموزش تشکیل کلاس توسط مدرس</p>
+                    </a>
+                </div>
+                <hr class="line-separator">
+                <div class="user-rating">
+                        <figure class="user-avatar small">
+                            <img src="/images/logo.png" alt="user-avatar">
+                        </figure>
+                        <p class="text-header tiny">موسسه راهگشا</p>
+                    @*<ul class="rating tooltip" title="Author's Reputation">
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+                <li class="rating-item empty">
+                    <!-- SVG STAR -->
+                    <svg class="svg-star">
+                        <use xlink:href="#svg-star"></use>
+                    </svg>
+                    <!-- /SVG STAR -->
+                </li>
+            </ul>*@
+                </div>
+            </div>
+
+            <div class="product-item column">
+                <!-- PRODUCT PREVIEW ACTIONS -->
+                <div class="product-preview-actions">
+                    <!-- PRODUCT PREVIEW IMAGE -->
+                    <figure class="product-preview-image">
+                        <img src="/course/thumbnail/courseDefaultImg.png" alt="product-image">
+                    </figure>
+                    <!-- /PRODUCT PREVIEW IMAGE -->
+                    <!-- PREVIEW ACTIONS -->
+                    <div class="preview-actions">
+                        <!-- PREVIEW ACTION -->
+                        <div class="preview-action">
+                            <a href="/LearningContent/EnterClassMobile">
+                                <div class="circle tiny primary">
+                                    <span class="icon-tag"></span>
+                                </div>
+                            </a>
+                            <a href="/LearningContent/EnterClassMobile">
+                                <p>نمایش</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <a href="/LearningContent/EnterClassMobile">
+                        <p class="text-header">راهنمای ورود به کلاس (موبایل)</p>
+                    </a>
+                    <p class="product-description">آموزش نحوه ورود به پروفایل هنرجویان و پیوستن به کلاس آنلاین از طریق موبایل </p>
+                    <a href="/LearningContent/EnterClassMobile">
+                        <p class="category secondary">فیلم آموزش ورود به کلاس (موبایل)</p>
+                    </a>
+                </div>
+                <hr class="line-separator">
+                <div class="user-rating">
+                        <figure class="user-avatar small">
+                            <img src="/images/logo.png" alt="user-avatar">
+                        </figure>
+                        <p class="text-header tiny">موسسه راهگشا</p>
+                    @*<ul class="rating tooltip" title="Author's Reputation">
+                        <li class="rating-item">
+                            <!-- SVG STAR -->
+                            <svg class="svg-star">
+                                <use xlink:href="#svg-star"></use>
+                            </svg>
+                            <!-- /SVG STAR -->
+                        </li>
+                        <li class="rating-item">
+                            <!-- SVG STAR -->
+                            <svg class="svg-star">
+                                <use xlink:href="#svg-star"></use>
+                            </svg>
+                            <!-- /SVG STAR -->
+                        </li>
+                        <li class="rating-item">
+                            <!-- SVG STAR -->
+                            <svg class="svg-star">
+                                <use xlink:href="#svg-star"></use>
+                            </svg>
+                            <!-- /SVG STAR -->
+                        </li>
+                        <li class="rating-item">
+                            <!-- SVG STAR -->
+                            <svg class="svg-star">
+                                <use xlink:href="#svg-star"></use>
+                            </svg>
+                            <!-- /SVG STAR -->
+                        </li>
+                        <li class="rating-item empty">
+                            <!-- SVG STAR -->
+                            <svg class="svg-star">
+                                <use xlink:href="#svg-star"></use>
+                            </svg>
+                            <!-- /SVG STAR -->
+                        </li>
+                    </ul>*@
+                </div>
+            </div>
+        </div>
+        <!-- /PRODUCT LIST -->
+    </div>
+        @*<div class="product-showcase">
+            <div class="headline">
+                <h4>بیشترین بازدیدها</h4>
+                <!-- SLIDE CONTROLS -->
+                <div class="slide-control-wrap">
+                    <div class="slide-control left">
+                        <!-- SVG ARROW -->
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                        <!-- /SVG ARROW -->
+                    </div>
+                    <div class="slide-control right">
+                        <!-- SVG ARROW -->
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                        <!-- /SVG ARROW -->
+                    </div>
+                </div>
+                <!-- /SLIDE CONTROLS -->
+            </div>
+            <!-- /HEADLINE -->
+            <!-- PRODUCT LIST -->
+            <div id="pl-5" class="product-list grid column4-wrap owl-carousel">
+                <!-- PRODUCT ITEM -->
+                <div class="product-item column">
+                    <!-- PRODUCT PREVIEW ACTIONS -->
+                    <div class="product-preview-actions">
+                        <!-- PRODUCT PREVIEW IMAGE -->
+                        <figure class="product-preview-image">
+                            <img src="images/items/tablet_m.jpg" alt="product-image">
+                        </figure>
+                        <!-- /PRODUCT PREVIEW IMAGE -->
+                        <!-- PREVIEW ACTIONS -->
+                        <div class="preview-actions">
+                            <!-- PREVIEW ACTION -->
+                            <div class="preview-action">
+                                <a href="product-page.html">
+                                    <div class="circle tiny primary">
+                                        <span class="icon-tag"></span>
+                                    </div>
+                                </a>
+                                <a href="product-page.html">
+                                    <p>نمایش</p>
+                                </a>
+                            </div>
+                            <!-- /PREVIEW ACTION -->
+                            <!-- PREVIEW ACTION -->
+                            <div class="preview-action">
+                                <a href="#">
+                                    <div class="circle tiny secondary">
+                                        <span class="icon-heart"></span>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <p>علاقه مندیها +</p>
+                                </a>
+                            </div>
+                            <!-- /PREVIEW ACTION -->
+                        </div>
+                        <!-- /PREVIEW ACTIONS -->
+                    </div>
+                    <!-- /PRODUCT PREVIEW ACTIONS -->
+                    <!-- PRODUCT INFO -->
+                    <div class="product-info">
+                        <a href="product-page.html">
+                            <p class="text-header">کاور تبلت Axcom (جدید)</p>
+                        </a>
+                        <p class="product-description">تولید کننده لورم ایپسوم فارسی </p>
+                        <a href="products.html">
+                            <p class="category tertiary">تبلت</p>
+                        </a>
+                        <p class="price"><span>تومان</span>380</p>
+                    </div>
+                    <!-- /PRODUCT INFO -->
+                    <hr class="line-separator">
+                    <!-- USER RATING -->
+                    <div class="user-rating">
+                        <a href="author-profile.html">
+                            <figure class="user-avatar small">
+                                <img src="images/avatars/avatar_16.jpg" alt="user-avatar">
+                            </figure>
+                        </a>
+                        <a href="author-profile.html">
+                            <p class="text-header tiny">اریکا تامپسون</p>
+                        </a>
+                        <ul class="rating tooltip" title="Author's Reputation">
+                            <li class="rating-item">
+                                <!-- SVG STAR -->
+                                <svg class="svg-star">
+                                    <use xlink:href="#svg-star"></use>
+                                </svg>
+                                <!-- /SVG STAR -->
+                            </li>
+                            <li class="rating-item">
+                                <!-- SVG STAR -->
+                                <svg class="svg-star">
+                                    <use xlink:href="#svg-star"></use>
+                                </svg>
+                                <!-- /SVG STAR -->
+                            </li>
+                            <li class="rating-item">
+                                <!-- SVG STAR -->
+                                <svg class="svg-star">
+                                    <use xlink:href="#svg-star"></use>
+                                </svg>
+                                <!-- /SVG STAR -->
+                            </li>
+                            <li class="rating-item">
+                                <!-- SVG STAR -->
+                                <svg class="svg-star">
+                                    <use xlink:href="#svg-star"></use>
+                                </svg>
+                                <!-- /SVG STAR -->
+                            </li>
+                            <li class="rating-item empty">
+                                <!-- SVG STAR -->
+                                <svg class="svg-star">
+                                    <use xlink:href="#svg-star"></use>
+                                </svg>
+                                <!-- /SVG STAR -->
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /USER RATING -->
+                </div>
+                <!-- /PRODUCT ITEM -->
+            </div>
+            <!-- PRODUCT LIST -->
+        </div>*@
+</div>
+
+
+
+

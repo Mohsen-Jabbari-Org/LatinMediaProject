@@ -1,0 +1,208 @@
+﻿@page "{StateId}/{pageId}/{fs}"
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@model LatinMedia.Web.Pages.Leon.Academies.Province.Cities.IndexModel
+@inject IUserService UserService
+@{
+    ViewData["Title"] = "شهرها";
+    Layout = "~/Pages/Shared/_LeonLayout.cshtml";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                لیست شهرها
+
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.CitiesForAdminViewModel.Cities.Count == 0)
+                {
+                    <div class="alert alert-danger ">
+                        رکوردی یافت نشد
+                    </div>
+                }
+
+                <div id="datatable-checkbox_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <form>
+                            <div class="col-sm-5">
+                                <div class="dataTables_length" id="datatable-checkbox_length">
+                                    <label>
+                                        نمایش
+                                        <select name="take" aria-controls="datatable-checkbox" class="form-control input-sm">
+                                            <option value="">پیش فرض</option>
+                                        </select> شهر
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="filterByCity" class="form-control" value="@ViewData["FilterCity"]" placeholder="جستجو براساس شهر" />
+
+                                <input type="submit" value="فیلتر کن" class="btn btn-success btn-round" />
+                                <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/1/0" class="btn btn-default btn-round">حذف فیلتر</a>
+                            </div>
+
+                        </form>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="/Leon/Academies/Province/Cities/CreateCity/@ViewData["StateId"]" class="btn btn-success">افزودن شهر جدید</a>
+                            <a href="/Leon/Academies/Province/" class="btn btn-warning">بازگشت</a>
+                            @{
+                                int rowCount = 1;
+                            }
+                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th style="width: 60px;" class="hidden-xs">ردیف</th>
+                                        <th style="width: 138px;">نام شهر</th>
+                                        <th style="width: 138px;">ظرفیت کلاس</th>
+                                        <th style="width: 138px;">عملیات</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item in Model.CitiesForAdminViewModel.Cities)
+                                    {
+
+                                        <tr role="row" class="odd">
+                                            <td class="hidden-xs">@rowCount</td>
+                                            <td>@item.CityName</td>
+                                            <td>@item.MaxUsers</td>
+                                            <td>
+                                                <a href="/Leon/Academies/Province/Cities/EditCity/@item.CityId" class="btn btn-warning btn-xs">ویرایش</a>
+                                                <a href="/Leon/Academies/Province/Cities/DeleteCity/@item.CityId" class="btn btn-danger btn-xs disabled">حذف</a>
+                                            </td>
+                                        </tr>
+                                        rowCount++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">نمایش @ViewData["PageID"] تا @ViewData["Take"] از @Model.CitiesForAdminViewModel.CityCounts رکورد</div>
+                        </div>
+                        <div class="col-sm-7">
+
+                            <div class="btn-group">
+                                @if (Model.CitiesForAdminViewModel.CurrentPage > 1)
+                                {
+                                    if (ViewData["FilterCity"].ToString() != "")
+                                    {
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities?/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.CurrentPage - 1)/@ViewData["FilterCity"]">قبلی</a>
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/1/@ViewData["FilterCity"]">اولین صفحه</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities?/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.CurrentPage - 1)/0">قبلی</a>
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/1/0">اولین صفحه</a>
+                                    }
+                                }
+
+                                @if (Model.CitiesForAdminViewModel.CurrentPage + 4 <= Model.CitiesForAdminViewModel.PageCount)
+                                {
+                                    @for (int i = Model.CitiesForAdminViewModel.CurrentPage; i <= Model.CitiesForAdminViewModel.CurrentPage + 4; i++)
+                                    {
+                                        if (ViewData["FilterCity"].ToString() != "")
+                                        {
+                                            <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@i/@ViewData["FilterCity"]" class="btn btn-default @((i==Model.CitiesForAdminViewModel.CurrentPage)? "btn btn-info" : "")">@i</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@i/0" class="btn btn-default @((i==Model.CitiesForAdminViewModel.CurrentPage)? "btn btn-info" : "")">@i</a>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = Model.CitiesForAdminViewModel.CurrentPage; i <= Model.CitiesForAdminViewModel.PageCount; i++)
+                                    {
+                                        if (ViewData["FilterCity"].ToString() != "")
+                                        {
+                                            <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@i/@ViewData["FilterCity"]" class="btn btn-default @((i == Model.CitiesForAdminViewModel.CurrentPage) ? "btn btn-info" : "")">@i</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@i/0" class="btn btn-default @((i == Model.CitiesForAdminViewModel.CurrentPage) ? "btn btn-info" : "")">@i</a>
+                                        }
+                                    }
+                                }
+
+                                @if (Model.CitiesForAdminViewModel.CurrentPage < Model.CitiesForAdminViewModel.PageCount)
+                                {
+                                    if (ViewData["FilterCity"].ToString() != "")
+                                    {
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.CurrentPage + 1)/@ViewData["FilterCity"]">بعدی</a>
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.PageCount)/@ViewData["FilterCity"]">اخرین صفحه</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.CurrentPage + 1)/0">بعدی</a>
+                                        <a class="btn btn-default" href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/@(Model.CitiesForAdminViewModel.PageCount)/0">اخرین صفحه</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#txtCity").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Account/CityAutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfCityId").val(i.item.val);
+                },
+                minLength: 3,
+                appendTo: '#CId',
+                position: { my: "left top", at: "left bottom" }
+            });
+        });
+    </script>
+}

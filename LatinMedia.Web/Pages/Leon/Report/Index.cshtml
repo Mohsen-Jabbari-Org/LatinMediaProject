@@ -1,0 +1,90 @@
+﻿@page
+@using LatinMedia.Core.Convertors
+@using LatinMedia.Core.Services.Interfaces
+@model LatinMedia.Web.Pages.Leon.Report.IndexModel
+@inject ICourseService CourseService
+@{
+    ViewData["Title"] = "گزارشات";
+}
+
+
+
+<form method="post">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    گزارشات
+
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-5">
+                            <input type="text" name="stDate" id="stDate" class="form-control" placeholder="تاریخ شروع" value="@ViewData["start"]"
+                                   data-ha-dp-disabletime="true" data-ha-datetimepicker="#stDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" name="fhDate" id="fhDate" class="form-control" placeholder="تاریخ پایان" value="@ViewData["end"]"
+                                   data-ha-dp-disabletime="true" data-ha-datetimepicker="#fhDate" data-ha-dp-issolar="true" data-ha-dp-resultinsolar="true" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+
+                        <input type="submit" value="فیلتر کن" class="btn btn-success btn-round" />
+                        <a href="/Leon/Report/" class="btn btn-default btn-round">حذف فیلتر</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action dataTable no-footer" role="grid" aria-describedby="datatable-checkbox_info">
+                            <thead>
+                                <tr role="row">
+                                    @*<th style="width: 60px;" class="hidden-xs">ردیف</th>*@
+                                    <th style="width: 138px;">تعداد کل هنرجویان</th>
+                                    <th style="width: 190px;">تعداد مدرسان</th>
+                                    <th style="width: 138px;">تعداد کلاس های در حال برگزاری</th>
+                                    <th style="width: 138px;">تعداد کلاس های خاتمه یافته</th>
+                                    <th style="width: 138px;">عملیات</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                <tr role="row" class="odd">
+                                    <td>@Model.ReportForAdminViewModel.UserCounts</td>
+                                    <td>@Model.ReportForAdminViewModel.TeacherCounts</td>
+                                    <td>@Model.ReportForAdminViewModel.FinishedClass</td>
+                                    <td>@Model.ReportForAdminViewModel.CurruntClass</td>
+                                    <td>
+                                        <a class="btn btn-warning btn-xs">جزئیات</a>
+                                        <a class="btn btn-success btn-xs">چاپ اطلاعات</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <a href="/Report/ShowPrint" class="btn btn-success btn-round" target="_blank">چاپ اطلاعات</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+

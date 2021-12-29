@@ -1,0 +1,64 @@
+﻿@page "{CityId}"
+@using LatinMedia.DataLayer.Entities.User
+@model LatinMedia.Web.Pages.Leon.Academies.Province.Cities.EditCityModel
+@{
+    ViewData["Title"] = "ویرایش شهر";
+}
+
+<form method="post">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+        <input type="hidden" asp-for="CityEditViewModel.StateId" value="@ViewData["StateId"]" />
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    ویرایش شهر
+
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            نام شهر :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="CityEditViewModel.CityName" required="" class="form-control  " placeholder="نام شهر را وارد نمایید" type="text">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <span asp-validation-for="CityEditViewModel.CityName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-7  ">
+                            ظرفیت مجاز کلاس ها :
+                        </label>
+                        <div class="col-md-8">
+                            <input asp-for="CityEditViewModel.MaxUsers" required="" class="form-control  " placeholder="ظرفیت کلاس را وارد نمایید" type="number">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <span asp-validation-for="CityEditViewModel.MaxUsers" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div style="clear:both; height:10px"></div>
+
+                    <div class="item form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-5">
+
+                            <input type="submit" class="btn btn-success" value="ثبت" />
+                            <a href="/Leon/Academies/Province/Cities/@ViewData["StateId"]/1/0" class="btn btn-warning">انصراف</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

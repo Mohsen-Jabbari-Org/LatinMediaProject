@@ -1,0 +1,53 @@
+﻿@using LatinMedia.Core.Security;
+@{
+    ViewData["Title"] = "ورود به کلاس";
+}
+@model Sample.Models.JoinModel
+
+<div class="section-headline-wrap">
+    <div class="section-headline">
+        <h2>ورود به کلاس</h2>
+        <p><a href="/">صفحه اصلی</a><span class="separator">/</span><span class="current-section">ورود به کلاس</span></p>
+    </div>
+</div>
+
+
+<div class="section-wrap">
+    <div class="section demo">
+
+        <div class="form-popup ">
+
+            <!-- FORM POPUP HEADLINE -->
+            <div class="form-popup-headline primary">
+                <h2>فرم ورود به کلاس</h2>
+
+            </div>
+            <!-- /FORM POPUP HEADLINE -->
+            <!-- FORM POPUP CONTENT -->
+            <div class="form-popup-content">
+                <form asp-action="Join" method="post">
+                    @{
+                        string FullName = User.Identity.GetGender() + " " + User.Identity.Name;
+                    }
+                    <label>نام</label>
+                    <input type="text" asp-for="Name" value="@FullName" readonly="readonly" placeholder="نام خود را وارد کنید">
+                    <span asp-validation-for="Name"></span>
+                    <br />
+                    <input type="hidden" id="Id" asp-for="@Model.Id" />
+                    <input type="hidden" id="Name" asp-for="@Model.Name" />
+                    <input type="hidden" id="ServerId" asp-for="@Model.ServerId" />
+                    <input type="hidden" id="Mobile" asp-for="@Model.Mobile" />
+                    <input type="hidden" id="ClassName" asp-for="@Model.ClassName" />
+
+                    <input type="submit" class="button mid dark" value="ورود به کلاس" />
+                </form>
+
+            </div>
+            <!-- /FORM POPUP CONTENT -->
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+}
+
