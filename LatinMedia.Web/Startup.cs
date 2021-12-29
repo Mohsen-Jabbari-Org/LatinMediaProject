@@ -127,7 +127,8 @@ namespace LatinMedia.Web
                   template: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
-
+#region hejazi
+#end region
 
             app.Run(async (context) =>
             {
